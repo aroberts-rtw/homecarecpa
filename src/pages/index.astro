@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const title = 'HomeCareCPA — Accounting and Tax for Non-Medical Home Care Businesses';
+const description = siteConfig.description;
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const featuredArticles = allArticles
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+---
+<BaseLayout title={title} description={description}>
+  <!-- Hero -->
+  <section class="mx-auto max-w-4xl px-6 py-20">
+    <div class="max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-widest text-teal-600 mb-4">For Private-Pay and Medicaid Waiver Home Care Owners</p>
+      <h1 class="font-serif text-4xl font-bold leading-tight text-slate-900 md:text-5xl">
+        A CPA focused on non-medical home care — not general practice.
+      </h1>
+      <p class="mt-6 text-xl text-slate-600 leading-relaxed">
+        Caregiver W-2 vs. 1099 compliance. Franchise vs. independent economics. State Medicaid waiver revenue. LOC-funded payroll. Owner distribution safety.
+      </p>
+      <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+        These decisions have real tax and legal consequences, and most home care owners are navigating them with generic bookkeeping software and a CPA who returns calls twice a year. RTW Advisors works with non-medical home care businesses, and the accounting we provide is built around how these businesses actually operate.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a
+          href="/get-started"
+          class="rounded-md bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700"
+        >
+          Get started
+        </a>
+        <a
+          href="/articles"
+          class="rounded-md border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-stone-50"
+        >
+          Read the articles
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we cover -->
+  <section class="border-t border-stone-200 bg-white">
+    <div class="mx-auto max-w-4xl px-6 py-20">
+      <h2 class="font-serif text-2xl font-bold text-slate-900 mb-12">What non-medical home care accounting actually requires</h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        {[
+          {
+            title: 'Caregiver classification — W-2 vs. 1099',
+            body: 'The Department of Labor\'s 2024 independent contractor rule and state-level tests (including California AB5 spillover and Georgia\'s own factors) mean home care operators face real exposure on misclassification. The bookkeeping needs to reflect actual status — and your CPA should be tracking the liability.',
+          },
+          {
+            title: 'Medicaid waiver revenue recognition',
+            body: 'State waiver programs (CCSP, SOURCE, ICWP in Georgia; equivalent programs in other states) pay on a different cycle than private pay. Your books need to separate these streams to get accurate payer-class margin — especially if you\'re planning to add waiver clients.',
+          },
+          {
+            title: 'LOC-funded payroll and cash flow',
+            body: 'Private-pay and Medicaid-waiver agencies often pay caregivers before client invoices are collected. The line-of-credit mechanics, interest treatment, and cash-basis-vs-accrual mismatch this creates is one of the most common sources of owner confusion about profitability.',
+          },
+          {
+            title: 'Franchise vs. independent economics',
+            body: 'Franchise royalties, territory fees, and required vendor relationships change the cost structure substantially. A CPA who doesn\'t work with franchised home care operators will miss the tax treatment of franchise fees and the profitability benchmarks that matter for the franchisor relationship.',
+          },
+          {
+            title: 'Owner compensation and distribution safety',
+            body: 'S-Corp reasonable compensation for a home care owner who also provides direct supervision of caregivers is a specific calculation — not a rule of thumb. Getting it wrong exposes distributions to FICA. Getting it right captures the QBI deduction.',
+          },
+          {
+            title: 'State Medicaid waiver billing mechanics',
+            body: 'Each state\'s HCBS waiver program has different billing portals, remittance timelines, and recoupment rules. Your books need to track outstanding waiver billings separately from private-pay receivables — they age differently and carry different recoupment risk.',
+          },
+        ].map(({ title, body }) => (
+          <div class="rounded-lg border border-stone-200 bg-stone-50 px-6 py-5">
+            <h3 class="font-semibold text-slate-900 text-base mb-2">{title}</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">{body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="border-t border-stone-200">
+    <div class="mx-auto max-w-4xl px-6 py-20">
+      <h2 class="font-serif text-2xl font-bold text-slate-900 mb-4">What RTW Advisors provides</h2>
+      <p class="text-slate-600 mb-12 max-w-2xl">Bookkeeping, tax preparation, and fractional CFO advisory — delivered through the RTW.ai platform. Productized, monthly close guaranteed by the 5th.</p>
+      <div class="grid gap-6 md:grid-cols-3">
+        {[
+          {
+            name: 'Bookkeeping',
+            desc: 'Daily transaction posting, monthly close by the 5th, payer-class revenue separation, caregiver payroll reconciliation.',
+            price: 'from $697/mo',
+          },
+          {
+            name: 'Bookkeeping + Advisory',
+            desc: 'Everything in Bookkeeping plus quarterly KPI report, quarterly business review, and priority response.',
+            price: 'from $1,097/mo',
+            featured: true,
+          },
+          {
+            name: 'CFO Advisory',
+            desc: 'Full bookkeeping plus monthly strategy sessions, rolling cash forecast, integrated tax planning, and quarterly board seat.',
+            price: 'from $2,297/mo',
+          },
+        ].map(({ name, desc, price, featured }) => (
+          <div class={`rounded-xl border px-6 py-6 ${featured ? 'border-teal-400 bg-teal-50' : 'border-stone-200 bg-white'}`}>
+            <h3 class="font-semibold text-slate-900 text-base">{name}</h3>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed">{desc}</p>
+            <p class="mt-4 text-sm font-semibold text-slate-900">{price}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 text-sm text-slate-500">Tax preparation is priced separately as an annual engagement. Subscribers receive a 15% member rate.</p>
+      <div class="mt-8">
+        <a
+          href="/get-started"
+          class="rounded-md bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700"
+        >
+          Start your intake →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent articles -->
+  {featuredArticles.length > 0 && (
+    <section class="border-t border-stone-200 bg-white">
+      <div class="mx-auto max-w-4xl px-6 py-20">
+        <div class="flex items-center justify-between mb-10">
+          <h2 class="font-serif text-2xl font-bold text-slate-900">Recent articles</h2>
+          <a href="/articles" class="text-sm font-medium text-teal-700 hover:text-teal-900 transition">All articles →</a>
+        </div>
+        <div class="space-y-6">
+          {featuredArticles.map((article) => (
+            <article class="border-b border-stone-100 pb-6 last:border-0">
+              <a href={`/articles/${article.id}`} class="group">
+                <h3 class="font-semibold text-slate-900 group-hover:text-teal-700 transition">{article.data.title}</h3>
+                <p class="mt-1 text-sm text-slate-600">{article.data.description}</p>
+                <p class="mt-2 text-xs text-slate-400">{article.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- About / attribution -->
+  <section class="border-t border-stone-200">
+    <div class="mx-auto max-w-4xl px-6 py-20">
+      <div class="max-w-2xl">
+        <h2 class="font-serif text-2xl font-bold text-slate-900 mb-4">About the practice</h2>
+        <p class="text-slate-600 leading-relaxed">
+          HomeCareCPA is a content property of <a href={siteConfig.parentUrl} class="text-teal-700 underline hover:text-teal-900">RTW Advisors LLC</a>, a virtual CPA practice based in Atlanta, GA. CPA services are provided by {siteConfig.founder.name}, {siteConfig.founder.suffix} (GA License #{siteConfig.founder.licenseNumber}). RTW Advisors works with non-medical home care businesses, home health agencies, and other healthcare-adjacent operators generating $500K to $3M annually.
+        </p>
+        <a href="/about" class="mt-4 inline-block text-sm font-medium text-teal-700 hover:text-teal-900 transition">Learn more about Askia Roberts, CPA →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
